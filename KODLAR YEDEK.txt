@@ -1,0 +1,108 @@
+#include <16f877a.h>
+#use delay(clock=4000000)
+#fuses XT,NOWDT,NOPUT,NOLVP,NOCPD,NOPROTECT,NODEBUG,NOBROWNOUT,NOWRT
+
+
+#use fast_io(a)
+#use fast_io(b)
+#use fast_io(d)
+
+#define buton_ileri pin_a0
+#define buton_geri pin_a1
+
+#define buton_ileri1 pin_a2
+#define buton_geri1 pin_a3
+
+unsigned int8 ADIM=1,ADIM1=1;
+
+
+void main()
+{
+setup_psp(PSP_DISABLED);
+setup_timer_1(T1_DISABLED);
+setup_timer_2(T2_DISABLED,0,1);
+setup_adc_ports(NO_ANALOGS);
+setup_adc(ADC_OFF);
+setup_ccp1(CCP_OFF);
+setup_ccp2(CCP_OFF);
+
+
+set_tris_a(0xFF);
+set_tris_c(0x00);
+set_tris_d(0x00);
+
+output_d(0x00);
+output_c(0x00);
+
+
+while(true){
+   
+ switch(ADIM){
+ 
+  case 1 : output_d(0b00000001); break;
+  case 2 : output_d(0b00000011); break;
+  case 3 : output_d(0b00000010); break;
+  case 4 : output_d(0b00000110); break;
+  case 5 : output_d(0b00000100); break;
+  case 6 : output_d(0b00001100); break;
+  case 7 : output_d(0b00001000); break;
+  case 8 : output_d(0b00001001); break;
+ 
+}
+delay_ms(10);
+
+ switch(ADIM1){
+ 
+  case 1 : output_c(0b00000001); break;
+  case 2 : output_c(0b00000011); break;
+  case 3 : output_c(0b00000010); break;
+  case 4 : output_c(0b00000110); break;
+  case 5 : output_c(0b00000100); break;
+  case 6 : output_c(0b00001100); break;
+  case 7 : output_c(0b00001000); break;
+  case 8 : output_c(0b00001001); break;
+ 
+}
+delay_ms(10);
+
+if(input(buton_ileri)) {
+delay_ms(500);
+ADIM++;
+
+if(ADIM==9){
+ADIM=1;
+
+}
+}
+
+if(input(buton_geri)) {
+delay_ms(500);
+ADIM--;
+
+if(ADIM==0){
+ADIM=8;
+
+}
+}
+if(input(buton_ileri1)) {
+delay_ms(500);
+ADIM1++;
+
+if(ADIM1==9){
+ADIM1=1;
+
+}
+}
+
+if(input(buton_geri1)) {
+delay_ms(500);
+ADIM1--;
+
+if(ADIM1==0){
+ADIM1=8;
+
+}
+}
+
+}
+}

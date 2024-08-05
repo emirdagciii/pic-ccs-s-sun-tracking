@@ -1,0 +1,405 @@
+CCS PCM C Compiler, Version 5.015, 5967               23-May-24 21:05
+
+               Filename:   C:\Users\Taha\Desktop\OKUL BELGELER\CCS C ÇALIÞMALAR\2 STEP GÜNEÞ TAKÝBÝ SÝSTEMÝ\2 STEP GÜNEÞ ÝZLER KOD\STEP MOTORLU GÜNEÞ TAKÝBÝ.lst
+
+               ROM used:   265 words (3%)
+                           Largest free fragment is 2048
+               RAM used:   9 (2%) at main() level
+                           10 (3%) worst case
+               Stack used: 1 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... #include <16f877a.h> 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2013 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+*
+00F1:  BCF    0A.0
+00F2:  BCF    0A.1
+00F3:  BCF    0A.2
+00F4:  ADDWF  02,F
+00F5:  GOTO   052
+00F6:  GOTO   055
+00F7:  GOTO   058
+00F8:  GOTO   05B
+00F9:  GOTO   05E
+00FA:  GOTO   061
+00FB:  GOTO   064
+00FC:  GOTO   067
+00FD:  BSF    0A.0
+00FE:  BCF    0A.1
+00FF:  BCF    0A.2
+0100:  ADDWF  02,F
+0101:  GOTO   073
+0102:  GOTO   07B
+0103:  GOTO   083
+0104:  GOTO   08B
+0105:  GOTO   093
+0106:  GOTO   09B
+0107:  GOTO   0A3
+0108:  GOTO   0AB
+....................  
+.................... #list 
+....................  
+.................... #use delay(clock=4000000) 
+*
+0004:  MOVLW  24
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+.................... #fuses XT,NOWDT,NOPUT,NOLVP,NOCPD,NOPROTECT,NODEBUG,NOBROWNOUT,NOWRT 
+....................  
+....................  
+.................... #use fast_io(a) 
+.................... #use fast_io(b) 
+.................... #use fast_io(d) 
+....................  
+.................... #define buton_ileri pin_a0 
+.................... #define buton_geri pin_a1 
+....................  
+.................... #define buton_ileri1 pin_a2 
+.................... #define buton_geri1 pin_a3 
+....................  
+.................... unsigned int8 ADIM=1,ADIM1=1; 
+....................  
+....................  
+.................... void main() 
+0019:  MOVF   03,W
+001A:  ANDLW  1F
+001B:  MOVWF  03
+001C:  MOVLW  01
+001D:  MOVWF  20
+001E:  MOVWF  21
+001F:  MOVLW  FF
+0020:  MOVWF  22
+0021:  BSF    03.5
+0022:  BSF    1F.0
+0023:  BSF    1F.1
+0024:  BSF    1F.2
+0025:  BCF    1F.3
+0026:  MOVLW  07
+0027:  MOVWF  1C
+0028:  BCF    03.7
+.................... { 
+.................... setup_psp(PSP_DISABLED); 
+0029:  BCF    09.4
+.................... setup_timer_1(T1_DISABLED); 
+002A:  BCF    03.5
+002B:  CLRF   10
+.................... setup_timer_2(T2_DISABLED,0,1); 
+002C:  MOVLW  00
+002D:  MOVWF  78
+002E:  MOVWF  12
+002F:  MOVLW  00
+0030:  BSF    03.5
+0031:  MOVWF  12
+.................... setup_adc_ports(NO_ANALOGS); 
+0032:  BSF    1F.0
+0033:  BSF    1F.1
+0034:  BSF    1F.2
+0035:  BCF    1F.3
+.................... setup_adc(ADC_OFF); 
+0036:  BCF    03.5
+0037:  BCF    1F.0
+.................... setup_ccp1(CCP_OFF); 
+0038:  MOVLW  F0
+0039:  ANDWF  17,F
+.................... setup_ccp2(CCP_OFF); 
+003A:  ANDWF  1D,F
+....................  
+....................  
+.................... set_tris_a(0xFF); 
+003B:  MOVLW  FF
+003C:  BSF    03.5
+003D:  MOVWF  05
+.................... set_tris_c(0x00); 
+003E:  MOVLW  00
+003F:  MOVWF  07
+0040:  BCF    03.5
+0041:  MOVWF  22
+.................... set_tris_d(0x00); 
+0042:  BSF    03.5
+0043:  MOVWF  08
+....................  
+.................... output_d(0x00); 
+0044:  BCF    03.5
+0045:  CLRF   08
+.................... output_c(0x00); 
+0046:  MOVWF  22
+0047:  BSF    03.5
+0048:  CLRF   07
+0049:  BCF    03.5
+004A:  CLRF   07
+....................  
+....................  
+.................... while(true){ 
+....................     
+....................  switch(ADIM){ 
+004B:  MOVLW  01
+004C:  SUBWF  20,W
+004D:  ADDLW  F8
+004E:  BTFSC  03.0
+004F:  GOTO   069
+0050:  ADDLW  08
+0051:  GOTO   0F1
+....................   
+....................   case 1 : output_d(0b00000001); break; 
+0052:  MOVLW  01
+0053:  MOVWF  08
+0054:  GOTO   069
+....................   case 2 : output_d(0b00000011); break; 
+0055:  MOVLW  03
+0056:  MOVWF  08
+0057:  GOTO   069
+....................   case 3 : output_d(0b00000010); break; 
+0058:  MOVLW  02
+0059:  MOVWF  08
+005A:  GOTO   069
+....................   case 4 : output_d(0b00000110); break; 
+005B:  MOVLW  06
+005C:  MOVWF  08
+005D:  GOTO   069
+....................   case 5 : output_d(0b00000100); break; 
+005E:  MOVLW  04
+005F:  MOVWF  08
+0060:  GOTO   069
+....................   case 6 : output_d(0b00001100); break; 
+0061:  MOVLW  0C
+0062:  MOVWF  08
+0063:  GOTO   069
+....................   case 7 : output_d(0b00001000); break; 
+0064:  MOVLW  08
+0065:  MOVWF  08
+0066:  GOTO   069
+....................   case 8 : output_d(0b00001001); break; 
+0067:  MOVLW  09
+0068:  MOVWF  08
+....................   
+.................... } 
+.................... delay_ms(10); 
+0069:  MOVLW  0A
+006A:  MOVWF  24
+006B:  CALL   004
+....................  
+....................  switch(ADIM1){ 
+006C:  MOVLW  01
+006D:  SUBWF  21,W
+006E:  ADDLW  F8
+006F:  BTFSC  03.0
+0070:  GOTO   0B2
+0071:  ADDLW  08
+0072:  GOTO   0FD
+....................   
+....................   case 1 : output_c(0b00000001); break; 
+0073:  MOVLW  00
+0074:  MOVWF  22
+0075:  BSF    03.5
+0076:  CLRF   07
+0077:  MOVLW  01
+0078:  BCF    03.5
+0079:  MOVWF  07
+007A:  GOTO   0B2
+....................   case 2 : output_c(0b00000011); break; 
+007B:  MOVLW  00
+007C:  MOVWF  22
+007D:  BSF    03.5
+007E:  CLRF   07
+007F:  MOVLW  03
+0080:  BCF    03.5
+0081:  MOVWF  07
+0082:  GOTO   0B2
+....................   case 3 : output_c(0b00000010); break; 
+0083:  MOVLW  00
+0084:  MOVWF  22
+0085:  BSF    03.5
+0086:  CLRF   07
+0087:  MOVLW  02
+0088:  BCF    03.5
+0089:  MOVWF  07
+008A:  GOTO   0B2
+....................   case 4 : output_c(0b00000110); break; 
+008B:  MOVLW  00
+008C:  MOVWF  22
+008D:  BSF    03.5
+008E:  CLRF   07
+008F:  MOVLW  06
+0090:  BCF    03.5
+0091:  MOVWF  07
+0092:  GOTO   0B2
+....................   case 5 : output_c(0b00000100); break; 
+0093:  MOVLW  00
+0094:  MOVWF  22
+0095:  BSF    03.5
+0096:  CLRF   07
+0097:  MOVLW  04
+0098:  BCF    03.5
+0099:  MOVWF  07
+009A:  GOTO   0B2
+....................   case 6 : output_c(0b00001100); break; 
+009B:  MOVLW  00
+009C:  MOVWF  22
+009D:  BSF    03.5
+009E:  CLRF   07
+009F:  MOVLW  0C
+00A0:  BCF    03.5
+00A1:  MOVWF  07
+00A2:  GOTO   0B2
+....................   case 7 : output_c(0b00001000); break; 
+00A3:  MOVLW  00
+00A4:  MOVWF  22
+00A5:  BSF    03.5
+00A6:  CLRF   07
+00A7:  MOVLW  08
+00A8:  BCF    03.5
+00A9:  MOVWF  07
+00AA:  GOTO   0B2
+....................   case 8 : output_c(0b00001001); break; 
+00AB:  MOVLW  00
+00AC:  MOVWF  22
+00AD:  BSF    03.5
+00AE:  CLRF   07
+00AF:  MOVLW  09
+00B0:  BCF    03.5
+00B1:  MOVWF  07
+....................   
+.................... } 
+.................... delay_ms(10); 
+00B2:  MOVLW  0A
+00B3:  MOVWF  24
+00B4:  CALL   004
+....................  
+.................... if(input(buton_ileri)) { 
+00B5:  BTFSS  05.0
+00B6:  GOTO   0C5
+.................... delay_ms(500); 
+00B7:  MOVLW  02
+00B8:  MOVWF  23
+00B9:  MOVLW  FA
+00BA:  MOVWF  24
+00BB:  CALL   004
+00BC:  DECFSZ 23,F
+00BD:  GOTO   0B9
+.................... ADIM++; 
+00BE:  INCF   20,F
+....................  
+.................... if(ADIM==9){ 
+00BF:  MOVF   20,W
+00C0:  SUBLW  09
+00C1:  BTFSS  03.2
+00C2:  GOTO   0C5
+.................... ADIM=1; 
+00C3:  MOVLW  01
+00C4:  MOVWF  20
+....................  
+.................... } 
+.................... } 
+....................  
+.................... if(input(buton_geri)) { 
+00C5:  BTFSS  05.1
+00C6:  GOTO   0D2
+.................... delay_ms(500); 
+00C7:  MOVLW  02
+00C8:  MOVWF  23
+00C9:  MOVLW  FA
+00CA:  MOVWF  24
+00CB:  CALL   004
+00CC:  DECFSZ 23,F
+00CD:  GOTO   0C9
+.................... ADIM--; 
+00CE:  DECFSZ 20,F
+....................  
+.................... if(ADIM==0){ 
+00CF:  GOTO   0D2
+.................... ADIM=8; 
+00D0:  MOVLW  08
+00D1:  MOVWF  20
+....................  
+.................... } 
+.................... } 
+.................... if(input(buton_ileri1)) { 
+00D2:  BTFSS  05.2
+00D3:  GOTO   0E2
+.................... delay_ms(500); 
+00D4:  MOVLW  02
+00D5:  MOVWF  23
+00D6:  MOVLW  FA
+00D7:  MOVWF  24
+00D8:  CALL   004
+00D9:  DECFSZ 23,F
+00DA:  GOTO   0D6
+.................... ADIM1++; 
+00DB:  INCF   21,F
+....................  
+.................... if(ADIM1==9){ 
+00DC:  MOVF   21,W
+00DD:  SUBLW  09
+00DE:  BTFSS  03.2
+00DF:  GOTO   0E2
+.................... ADIM1=1; 
+00E0:  MOVLW  01
+00E1:  MOVWF  21
+....................  
+.................... } 
+.................... } 
+....................  
+.................... if(input(buton_geri1)) { 
+00E2:  BTFSS  05.3
+00E3:  GOTO   0EF
+.................... delay_ms(500); 
+00E4:  MOVLW  02
+00E5:  MOVWF  23
+00E6:  MOVLW  FA
+00E7:  MOVWF  24
+00E8:  CALL   004
+00E9:  DECFSZ 23,F
+00EA:  GOTO   0E6
+.................... ADIM1--; 
+00EB:  DECFSZ 21,F
+....................  
+.................... if(ADIM1==0){ 
+00EC:  GOTO   0EF
+.................... ADIM1=8; 
+00ED:  MOVLW  08
+00EE:  MOVWF  21
+....................  
+.................... } 
+.................... } 
+00EF:  GOTO   04B
+....................  
+.................... } 
+.................... } 
+....................  
+00F0:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F39   XT NOWDT NOPUT NOBROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
